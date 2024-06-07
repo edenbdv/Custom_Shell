@@ -51,11 +51,15 @@ void print_history() {
 
 
 void execute_command(char* input) {
+  // Create a copy of the input string for tokenization
+    char input_copy[MAX_LENGTH];
+    strncpy(input_copy, input, MAX_LENGTH);
+
     // Tokenize the input to get the command and its arguments
     char* argv[MAX_COMMANDS];
     int argc = 0;
 
-    argv[argc] = strtok(input, " ");
+    argv[argc] = strtok(input_copy, " ");
     while (argv[argc] != NULL) {
         argc++;
         argv[argc] = strtok(NULL, " ");
@@ -74,6 +78,9 @@ void execute_command(char* input) {
                 perror("chdir failed");
             }
             else {
+                printf("succsess command: %s\n", input); // Debug print statement
+
+
                add_to_history(input);
 
             }
@@ -153,6 +160,8 @@ int main(int argc, char *argv[]) {
 
  
         // Execute the command (assuming it's an executable)
+        printf("Executing command: %s\n", input); // Debug print statement
+
         execute_command(input);
     }
 
