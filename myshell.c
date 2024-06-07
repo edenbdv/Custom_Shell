@@ -74,7 +74,7 @@ void execute_command(char* input) {
                 perror("chdir failed");
             }
             else {
-               add_to_history("input");
+               add_to_history(input);
 
             }
         } else {
