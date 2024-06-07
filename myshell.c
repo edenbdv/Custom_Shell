@@ -73,27 +73,16 @@ void execute_command(char* input) {
 
     if (strcmp(argv[0], "cd") == 0) {
         // Change directory
-        if (argc > 1) {
             if (chdir(argv[1]) == -1) {
                 perror("chdir failed");
             }
-            else {
-                printf("succsess command: %s\n", input); // Debug print statement
-
-
-               add_to_history(input);
-
-            }
-        } else {
-            fprintf(stderr, "cd: missing argument\n");
-        }
+          
         return;
     }
 
     if (strcmp(argv[0], "history") == 0) {
-        add_to_history("history");
-
-        print_history();
+          print_history();
+         
         return;
     }
 
@@ -102,7 +91,7 @@ void execute_command(char* input) {
         char cwd[MAX_LENGTH];
         if (getcwd(cwd, sizeof(cwd)) != NULL) {
             printf("%s\n", cwd);
-            add_to_history("pwd");
+            //add_to_history("pwd");
 
         } else {
             perror("getcwd failed");
@@ -128,7 +117,7 @@ void execute_command(char* input) {
     } else {
         // Parent process
         waitpid(pid, NULL, 0);
-        add_to_history(input);
+        //add_to_history(input);
 
     }
 }
@@ -157,11 +146,7 @@ int main(int argc, char *argv[]) {
 
         // Remove the newline character from the end of the input
         input[strcspn(input, "\n")] = 0;
-
- 
-        // Execute the command (assuming it's an executable)
-        printf("Executing command: %s\n", input); // Debug print statement
-
+        add_to_history(input);
         execute_command(input);
     }
 
